@@ -5,11 +5,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Employee DashBoard</title>
 
 
 <script type="text/javascript">
 window.onload = function() {
+
+<!--  Skills Sets -->
  
 var dps = [[], [], [], [],[],[]];
 var chart = new CanvasJS.Chart("skillSetContainer", {
@@ -96,6 +98,7 @@ var label;
  
 chart.render();
  
+<!-- Employees Data -->
 	 
 	var dps = [[]];
 	var chart = new CanvasJS.Chart("chartContainer", {
@@ -118,7 +121,6 @@ chart.render();
 		data: [{
 			type: "stackedColumn",
 			name: "Employees",
-			showInLegend: true,
 			yValueFormatString: "#,##0 employees",
 			dataPoints: dps[0]
 		}]
@@ -149,16 +151,95 @@ chart.render();
 	</c:forEach> 
 	 
 	chart.render();
+
+<!--  Tfactor Hyderabad -->
+
+	var dps = [[]];
+	var chart = new CanvasJS.Chart("tfactorHyd", {
+		theme: "light2", // "light1", "dark1", "dark2"
+		animationEnabled: true,
+		title: {
+			text: "T-Factor Hyderabad"
+		},
+		data: [{
+			type: "pie",
+			showInLegend: "true",
+			legendText: "{label}",
+			yValueFormatString: "#,##0.0#\"%\"",
+			indexLabelFontSize: 16,
+			indexLabel: "{label} - {y}",
+			dataPoints: dps[0]
+		}]
+	});
+	 
+	var yValue;
+	var label;
+	 
+	<c:forEach items="${hydTfDataList}" var="dataPoints" varStatus="loop">	
+		<c:forEach items="${dataPoints}" var="dataPoint">
+			yValue = parseFloat("${dataPoint.y}");
+			label = "${dataPoint.label}";
+			dps[parseInt("${loop.index}")].push({
+				label : label,
+				y : yValue,
+			});		
+		</c:forEach>	
+	</c:forEach> 
+	 
+	chart.render();
+	
+	<!--  Tfactor Chennai -->
+
+	var dps = [[]];
+	var chart = new CanvasJS.Chart("tfactorCh", {
+		theme: "light2", // "light1", "dark1", "dark2"
+		animationEnabled: true,
+		title: {
+			text: "T-Factor Chennai"
+		},
+		data: [{
+			type: "pie",
+			showInLegend: "true",
+			legendText: "{label}",
+			yValueFormatString: "#,##0.0#\"%\"",
+			indexLabelFontSize: 16,
+			indexLabel: "{label} - {y}",
+			dataPoints: dps[0]
+		}]
+	});
+	 
+	var yValue;
+	var label;
+	 
+	<c:forEach items="${chTfDataList}" var="dataPoints" varStatus="loop">	
+		<c:forEach items="${dataPoints}" var="dataPoint">
+			yValue = parseFloat("${dataPoint.y}");
+			label = "${dataPoint.label}";
+			dps[parseInt("${loop.index}")].push({
+				label : label,
+				y : yValue,
+			});		
+		</c:forEach>	
+	</c:forEach> 
+	 
+	chart.render();
+	
 	 
 	}  
 </script>
 
 
-
 </head>
 <body>
-	<div id="chartContainer" style="height: 300px; width: 50%;"></div> 
-	<div id="skillSetContainer" style="height: 300px; width: 50%;"></div>
+<div align="center"><h1><b><i>Dashboard Template</i></b></h1></div>
+<div align="center" style="width: 790px;height: 500px;float: left;">
+	<div id="chartContainer" style="height: 250px; width: 70%;"></div> <br/><br/>
+	<div id="skillSetContainer" style="height: 250px; width: 70%;"></div>
+</div>
+<div align="center" style="width: 500px;height: 500px;float: right;">
+	 <div id="tfactorHyd" style="height: 250px; width: 70%;"></div><br/><br/>
+	<div id="tfactorCh" style="height: 250px; width: 70%;"></div> 
+</div>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>

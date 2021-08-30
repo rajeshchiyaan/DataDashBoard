@@ -5,6 +5,7 @@ public class Employee {
 	private String name;
 	private String location;
 	private String skillSet;
+	private String tFactor;
 	
 	public String getName() {
 		return name;
@@ -25,9 +26,17 @@ public class Employee {
 	public void setSkillSet(String skillSet) {
 		this.skillSet = skillSet;
 	}
+	
+	public String gettFactor() {
+		return tFactor;
+	}
+	public void settFactor(String tFactor) {
+		this.tFactor = tFactor;
+	}
 	@Override
 	public String toString() {
-		return "Employee [name=" + name + ", location=" + location + ", skillSet=" + skillSet + "]";
+		return "Employee [name=" + name + ", location=" + location + ", skillSet=" + skillSet + ", tFactor=" + tFactor
+				+ "]";
 	}
 	
 }

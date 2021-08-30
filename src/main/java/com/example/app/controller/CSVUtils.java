@@ -14,15 +14,15 @@ import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 
 public class CSVUtils {
 
-	private static final String SEPERATOR = "$#&";
-	private static final String JAVA = "JAVA";
-	private static final String AI = "AI";
-	private static final String PYTHON = "PYTHON";
-	private static final String SELENIUM = "SELENIUM";
-	private static final String SPRING = "SPRING";
-	private static final String OTHERS = "OTHERS";
-	private static final String HYDERABAD = "HYDERABAD";
-	private static final String CHENNAI = "CHENNAI";
+	public static final String SEPERATOR = "$#&";
+	public static final String JAVA = "JAVA";
+	public static final String AI = "AI";
+	public static final String PYTHON = "PYTHON";
+	public static final String SELENIUM = "SELENIUM";
+	public static final String SPRING = "SPRING";
+	public static final String OTHERS = "OTHERS";
+	public static final String HYDERABAD = "HYDERABAD";
+	public static final String CHENNAI = "CHENNAI";
 	
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
@@ -52,9 +52,10 @@ public class CSVUtils {
 
 	private static Map<String, String> columnMappings() {
 		Map<String, String> mapping = new HashMap<String, String>();
-		mapping.put("name", "Name");
-		mapping.put("location", "Location");
-		mapping.put("skillSet", "SkillSet");
+		mapping.put("Name", "name");
+		mapping.put("Location", "location");
+		mapping.put("Skill Set", "skillSet");
+		mapping.put("T-Factor if TCS Trainee/Exp", "tFactor");
 		return mapping;
 	}
 
@@ -185,6 +186,65 @@ public class CSVUtils {
 		list.add(seleniumDataPoints);
 		list.add(otherDataPoints);
 
+		return list;
+	}
+
+	public static List<List<Map<Object, Object>>> getTfactorList(List<Employee> listArg, String location) {
+		
+		Map<Object, Object> mapTf1 = new HashMap<>();
+		Map<Object, Object> mapTf2 = new HashMap<>();
+
+		List<Map<Object, Object>> dataPoints1 = new ArrayList<Map<Object, Object>>();
+		List<List<Map<Object, Object>>> list = new ArrayList<List<Map<Object, Object>>>();
+
+		mapTf1.put("label", "1.99");
+		mapTf1.put("y", 0);
+
+		mapTf2.put("label", "2.99");
+		mapTf2.put("y", 0);
+		 
+		for (Employee data : listArg) {
+
+			if (location.equalsIgnoreCase(data.getLocation())) {
+				
+				if("1.99".equals(data.gettFactor()))
+				{
+					Integer localLnValue = (Integer) mapTf1.get("y");
+
+					localLnValue++;
+
+					mapTf1.put("y", localLnValue);
+				}
+				else
+				{
+					Integer localLnValue = (Integer) mapTf2.get("y");
+
+					localLnValue++;
+
+					mapTf2.put("y", localLnValue);
+				}
+
+			}
+
+		}
+		
+		Integer localLnValueTf1 = (Integer) mapTf1.get("y");
+		Integer localLnValueTf2 = (Integer) mapTf2.get("y");
+		
+		double  d1= localLnValueTf1;
+		double  d2= localLnValueTf2;
+		double total = d1+d2;
+		
+		double localPerTf1 = (localLnValueTf1/total)* 100;
+		double localPerTf2 = (localLnValueTf2/total)* 100;
+		
+		mapTf1.put("y", localPerTf1);
+		mapTf2.put("y", localPerTf2);
+		 
+		 dataPoints1.add(mapTf1);
+		 dataPoints1.add(mapTf2);
+		 list.add(dataPoints1);
+		
 		return list;
 	}
 

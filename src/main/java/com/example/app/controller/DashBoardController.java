@@ -26,6 +26,14 @@ public class DashBoardController {
 		List<List<Map<Object, Object>>> skillSetDataList = CSVUtils.getSkillSetList(list);
 		
 		model.addAttribute("skillSetDataList", skillSetDataList);
+		
+		List<List<Map<Object, Object>>> hydTfDataList = CSVUtils.getTfactorList(list,CSVUtils.HYDERABAD);
+		
+		model.addAttribute("hydTfDataList", hydTfDataList);
+		
+		List<List<Map<Object, Object>>> chTfDataList = CSVUtils.getTfactorList(list,CSVUtils.CHENNAI);
+		
+		model.addAttribute("chTfDataList", chTfDataList);
 
 		return "home";
 	}
